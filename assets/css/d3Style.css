@@ -52,6 +52,11 @@
   border-radius: 4px;
 }
 
+.x_label .y_label{
+  font-size: 10px;
+}
+
+
 /* Mobile Rules */
 @media screen and (max-width: 530px) {
   .stateText {
