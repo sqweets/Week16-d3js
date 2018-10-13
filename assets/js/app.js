@@ -67,7 +67,7 @@ d3.csv('assets/data/data.csv')
             .call(yAxis);
 
     // Create the state circles
-    circlesGrp = main.append("g")
+    circlesGroup = main.append("g")
         .selectAll("circle")
         .data(data)
         .enter()
@@ -79,7 +79,7 @@ d3.csv('assets/data/data.csv')
         .attr("transform", `translate(${-margin.left}, ${padding.right})`);
 
     //Add the state abbr text to the circles
-    main.append("g")
+    textGroup = main.append("g")
         .selectAll("text")
         .data(data)
         .enter()
@@ -117,7 +117,7 @@ d3.csv('assets/data/data.csv')
     svg.call(toolTip);
 
     // Create "mouseover" event listener to display tooltip
-    circlesGrp.on("mouseover", function(d) {
+    textGroup.on("mouseover", function(d) {
         toolTip.show(d, this);
     })
     // Step 4: Create "mouseout" event listener to hide tooltip
