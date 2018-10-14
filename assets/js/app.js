@@ -7,6 +7,7 @@ d3.csv('assets/data/data.csv')
     var xLabel = 'Poverty: ';
     var yLabel = 'Healthcare: ';
     var percent_label = '%';
+    var yaxis_lable_length = 180;
 
     // Plot constant values (should be const)
     var margin = {top: 50, right: 50, bottom: 20, left: 50};
@@ -76,16 +77,16 @@ d3.csv('assets/data/data.csv')
         .attr("cy", function(d) { return yScale(d[currentY]); })
         .attr("r", 10)
         .attr('class', 'stateCircle')
-        .attr("transform", `translate(${-margin.left}, ${padding.right})`);
+        .attr("transform", `translate(${0-margin.left}, ${padding.right})`);
 
     //Add the state abbr text to the circles
-    textGroup = main.append("g")
+    circlesTextGroup = main.append("g")
         .selectAll("text")
         .data(data)
         .enter()
         .append("text")
         .attr("x", function(d) { return xScale(d[currentX]); })
-        .attr("y", function(d) { return yScale(d[currentY]) + 4; })
+        .attr("y", function(d) { return yScale(d[currentY])+4; })
         .text( function (d) { return d.abbr; })
         .attr('class', 'stateText')
         .attr("font-size", "10px")
@@ -93,17 +94,19 @@ d3.csv('assets/data/data.csv')
 
     // yAxis label
     svg.append("text")
-        .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-        .attr("transform", "translate("+ (0) +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
+        .text("Lacks Heathcare (%)")
+        .attr("transform", "translate("+ (margin.left/3) +","+ (height-(yaxis_lable_length/2)) +")rotate(-90)")
         .attr("class", "y_label")
-        .text("Lacks Heathcare (%)");
+        .attr("font-size", "14px")
+        .attr("font-weight", "bold");
 
     // xAxis label
     svg.append("text")
-        .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-        .attr("transform", "translate("+ (width/2) +","+(500)+")")  // centre below axis
+        .text("In Poverty (%)")
+        .attr("transform", "translate("+ (width/2) +","+ (svgHeight-(margin.bottom/3)) +")")
         .attr("class", "x_label")
-        .text("In Poverty (%)");
+        .attr("font-size", "14px")
+        .attr("font-weight", "bold");
 
 
     // Define the Tooltip
@@ -117,7 +120,7 @@ d3.csv('assets/data/data.csv')
     svg.call(toolTip);
 
     // Create "mouseover" event listener to display tooltip
-    textGroup.on("mouseover", function(d) {
+    circlesTextGroup.on("mouseover", function(d) {
         toolTip.show(d, this);
     })
     // Step 4: Create "mouseout" event listener to hide tooltip
